@@ -8,4 +8,5 @@ public interface ProductOutputPort {
     List<Product> findAll(); // Buscar todos los productos
     Optional<Product> findById(Long id); // Buscar un producto por ID
     Product save(Product product); // Guardar un producto
+    Optional<Product> findByNameAndBrandIdAndCategoryId (String name , Long brandId , Long categoryId);
 }
