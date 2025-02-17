@@ -1,6 +1,7 @@
 package com.daniel.productHex.application.dtos;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 public class ProductResponse {
     private Long id;
@@ -11,13 +12,14 @@ public class ProductResponse {
     private Long categoryId;
     private Long brandId;
     private Long supplierId;
+    private LocalDateTime createdAt;
 
     // Constructor vacío necesario para Spring y frameworks de serialización
     public ProductResponse() {
     }
 
     // Constructor completo
-    public ProductResponse(Long id, String name, String description, BigDecimal price, int quantity, Long categoryId, Long brandId, Long supplierId) {
+    public ProductResponse(Long id, String name, String description, BigDecimal price, int quantity, Long categoryId, Long brandId, Long supplierId, LocalDateTime createdAt) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -26,6 +28,7 @@ public class ProductResponse {
         this.categoryId = categoryId;
         this.brandId = brandId;
         this.supplierId = supplierId;
+        this.createdAt = createdAt;
     }
 
     // Getters y Setters
@@ -92,5 +95,12 @@ public class ProductResponse {
     public void setSupplierId(Long supplierId) {
         this.supplierId = supplierId;
     }
-}
 
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+}

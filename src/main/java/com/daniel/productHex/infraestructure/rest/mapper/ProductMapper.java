@@ -21,8 +21,8 @@ public class ProductMapper {
                 productRequest.getQuantity(),
                 productRequest.getCategoryId(),
                 productRequest.getBrandId(),
-                productRequest.getSupplierId()
-        );
+                productRequest.getSupplierId(),
+                null);
     }
 
     public ProductResponse toResponse(Product product) {
@@ -36,7 +36,8 @@ public class ProductMapper {
                 product.getQuantity(),
                 product.getCategoryId(),
                 product.getBrandId(),
-                product.getSupplierId()
+                product.getSupplierId(),
+                product.getCreatedAt()
         );
     }
 }

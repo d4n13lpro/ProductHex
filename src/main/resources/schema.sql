@@ -7,13 +7,15 @@ USE productdb;
 CREATE TABLE IF NOT EXISTS categories (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL UNIQUE,
-    description TEXT NOT NULL
+    description TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE IF NOT EXISTS brands (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL UNIQUE,
-    description TEXT NOT NULL
+    description TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE IF NOT EXISTS suppliers (
@@ -21,7 +23,8 @@ CREATE TABLE IF NOT EXISTS suppliers (
     name VARCHAR(255) NOT NULL UNIQUE,
     contact_name VARCHAR(255) NOT NULL,
     contact_email VARCHAR(255) NOT NULL,
-    contact_phone VARCHAR(15) NOT NULL
+    contact_phone VARCHAR(15) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE IF NOT EXISTS products (
@@ -33,6 +36,7 @@ CREATE TABLE IF NOT EXISTS products (
     category_id BIGINT NOT NULL,
     brand_id BIGINT NOT NULL,
     supplier_id BIGINT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT chk_price CHECK (price >= 0),
     CONSTRAINT chk_quantity CHECK (quantity >= 0),
     CONSTRAINT fk_category FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE RESTRICT,
@@ -41,6 +45,15 @@ CREATE TABLE IF NOT EXISTS products (
     CONSTRAINT unique_product UNIQUE (name, brand_id, category_id)
 );
 
+CREATE TABLE IF NOT EXISTS product_audit (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    product_id BIGINT NOT NULL,
+    action VARCHAR(10) NOT NULL, -- Ejemplo: 'INSERT'
+    action_timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    performed_by VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_product_audit FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
+);
 
 -- Insertar categorías
 INSERT INTO categories (name, description) VALUES
@@ -73,5 +86,3 @@ INSERT INTO products (name, description, price, quantity, category_id, brand_id,
 ('Leche en polvo Nestlé', 'Leche en polvo fortificada de 800g', 10.50, 100, 3, 5, 3),
 ('Aspiradora LG Turbo', 'Aspiradora con filtro HEPA y succión potente', 250.00, 10, 4, 4, 4),
 ('Balón de fútbol Adidas', 'Balón profesional aprobado por FIFA', 40.00, 30, 5, 3, 5);
-
-

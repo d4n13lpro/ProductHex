@@ -15,7 +15,15 @@ public class ProductImportResponse {
         return importedProducts;
     }
 
+    public void setImportedProducts(List<ProductResponse> importedProducts) {
+        this.importedProducts = importedProducts;
+    }
+
     public List<ProductRequest> getRejectedProducts() {
         return rejectedProducts;
+    }
+
+    public void setRejectedProducts(List<ProductRequest> rejectedProducts) {
+        this.rejectedProducts = rejectedProducts;
     }
 }

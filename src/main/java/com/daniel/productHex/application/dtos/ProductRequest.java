@@ -1,16 +1,36 @@
 package com.daniel.productHex.application.dtos;
 
+import jakarta.validation.constraints.*;
+
 import java.math.BigDecimal;
 
 public class ProductRequest {
+
+    @NotBlank(message = "El nombre es obligatorio")
     private String name;
+
+    @NotBlank(message = "La descripción es obligatoria")
     private String description;
+
+    @DecimalMin(value = "0.01", message = "El precio debe ser mayor que 0")
     private BigDecimal price;
+
+    @Min(value = 0, message = "La cantidad no puede ser negativa")
     private int quantity;
+
+    @NotNull(message = "Debe especificar una categoría válida")
+    @Positive(message = "La categoría debe ser positiva")
     private Long categoryId;
+
+    @NotNull(message = "Debe especificar una marca válida")
+    @Positive(message = "La marca debe ser positiva")
     private Long brandId;
+
+    @NotNull(message = "Debe especificar un proveedor válido")
+    @Positive(message = "El proveedor debe ser positivo")
     private Long supplierId;
 
+    // Constructor vacío para inicialización
     public ProductRequest() {
         this.name = "";
         this.description = "";
@@ -21,6 +41,7 @@ public class ProductRequest {
         this.supplierId = 0L;
     }
 
+    // Getters y Setters
     public String getName() {
         return name;
     }
@@ -47,15 +68,5 @@ public class ProductRequest {
 
     public Long getSupplierId() {
         return supplierId;
-    }
-
-    public void validate() {
-        if (name == null || name.trim().isEmpty()) throw new IllegalArgumentException("El nombre es obligatorio");
-        if (description == null || description.trim().isEmpty()) throw new IllegalArgumentException("La descripción es obligatoria");
-        if (price == null || price.compareTo(BigDecimal.ZERO) < 0) throw new IllegalArgumentException("El precio debe ser mayor o igual a 0");
-        if (quantity < 0) throw new IllegalArgumentException("La cantidad no puede ser negativa");
-        if (categoryId == null || categoryId <= 0) throw new IllegalArgumentException("Debe especificar una categoría válida");
-        if (brandId == null || brandId <= 0) throw new IllegalArgumentException("Debe especificar una marca válida");
-        if (supplierId == null || supplierId <= 0) throw new IllegalArgumentException("Debe especificar un proveedor válido");
     }
 }
